@@ -52,7 +52,7 @@ The most impactful thing would be a proper car dataset  hundreds of models with 
 
 I'd add car photography. When a user sees the car they've been matched with  an actual image of it  the recommendation lands completely differently. It stops being a data output and starts feeling like a real suggestion.
 
-I'd spend serious time improving the quiz itself. Better calibrated questions, more carefully weighted dimension scores, maybe an adaptive question path that branches based on early answers. The current 12 questions work, but they could be a lot sharper.
+I'd spend serious time improving the quiz itself. Also i'll provide a better report to the user, one which actually links to every personality user has described. Better calibrated questions, more carefully weighted dimension scores, maybe an adaptive question path that branches based on early answers. The current 12 questions work, but they could be a lot sharper.
 
 I'd add a social proof layer  something like "74 drivers with your archetype chose this car. Here's what they said 6 months later." That kind of signal does more for a hesitant buyer than any spec breakdown.
 
