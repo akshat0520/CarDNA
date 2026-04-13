@@ -106,6 +106,12 @@ public/
 database.sqlite
 ```
 
+## Live Link (Vercel Deployed)
+
+'''bash
+https://car-dna.vercel.app/
+'''
+
 ## Setup
 
 ### 1. Clone and install
