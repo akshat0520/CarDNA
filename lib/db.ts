@@ -9,7 +9,9 @@ declare global {
   var __driverdna_db__: Database.Database | undefined;
 }
 
-const dbPath = path.resolve(process.cwd(), "database.sqlite");
+const dbPath = process.env.VERCEL
+  ? path.resolve("/tmp", "database.sqlite")
+  : path.resolve(process.cwd(), "database.sqlite");
 const db = global.__driverdna_db__ ?? new Database(dbPath);
 
 if (process.env.NODE_ENV !== "production") {

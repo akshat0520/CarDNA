@@ -14,6 +14,38 @@ import type {
 
 export const runtime = "nodejs";
 
+function persistQuizSessionSafely(
+  answers: number[],
+  dimensionScores: DimensionScores,
+  archetype: QuizResult["archetype"],
+  matches: CarMatch[],
+): void {
+  try {
+    db.prepare(
+      `
+      INSERT INTO quiz_sessions (
+        answers,
+        dimension_scores,
+        archetype,
+        recommended_cars
+      ) VALUES (?, ?, ?, ?)
+      `,
+    ).run(
+      JSON.stringify(answers),
+      JSON.stringify(dimensionScores),
+      JSON.stringify(archetype),
+      JSON.stringify(
+        matches.map((match) => ({
+          carId: match.car.id,
+          fitScore: match.fitScore,
+        })),
+      ),
+    );
+  } catch (error) {
+    console.warn("Quiz session persistence skipped:", error);
+  }
+}
+
 type QuizSubmitPayload = {
   answers?: number[];
   budgetMaxLakh?: number;
@@ -177,24 +209,7 @@ export async function POST(
       }),
     );
 
-    db.prepare(
-      `
-      INSERT INTO quiz_sessions (
-        answers,
-        dimension_scores,
-        archetype,
-        recommended_cars
-      ) VALUES (?, ?, ?, ?)
-      `,
-    ).run(
-      JSON.stringify(body.answers),
-      JSON.stringify(dimensionScores),
-      JSON.stringify(archetype),
-      JSON.stringify(matches.map((match) => ({
-        carId: match.car.id,
-        fitScore: match.fitScore,
-      }))),
-    );
+    persistQuizSessionSafely(body.answers, dimensionScores, archetype, matches);
 
     const response: QuizResult = {
       archetype,
